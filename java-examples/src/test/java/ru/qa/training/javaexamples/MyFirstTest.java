@@ -1,4 +1,4 @@
-
+package ru.qa.training.javaexamples;
 
 import org.junit.After;
 import org.junit.Before;

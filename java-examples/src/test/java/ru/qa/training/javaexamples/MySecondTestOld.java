@@ -9,11 +9,12 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 
-public class MySecondTest {
+public class MySecondTestOld {
     private WebDriver driver;
 
 

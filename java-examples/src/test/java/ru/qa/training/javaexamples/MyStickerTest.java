@@ -8,6 +8,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -24,7 +25,8 @@ public class MyStickerTest {
     @Test
     public void myStickerTest() {
         driver.get("http://localhost/litecart");
-        List<WebElement> items = driver.findElements(By.cssSelector("li.product.column.shadow.hover-light"));
+        List<WebElement> items = driver.findElements(By.cssSelector(".image-wrapper"));
+
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         for (int i = 0; i < items.size(); i++) {
 

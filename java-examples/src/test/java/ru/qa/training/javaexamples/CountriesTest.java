@@ -22,7 +22,7 @@ public class CountriesTest {
     }
 
     @Test
-    public void mySecondTest() {
+    public void countriesTest() {
 
         login();
         List<WebElement> countriesRows = driver.findElements(By.xpath("//td[5]/a"));

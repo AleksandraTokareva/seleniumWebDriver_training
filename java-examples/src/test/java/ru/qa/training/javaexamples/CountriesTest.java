@@ -25,11 +25,7 @@ public class CountriesTest {
     @Test
     public void mySecondTest() {
 
-        driver.get("http://localhost/litecart/admin/?app=countries&doc=countries");
-        driver.findElement(By.name("username")).sendKeys("admin");
-        driver.findElement(By.name("password")).sendKeys("admin");
-        driver.findElement(By.name("remember_me")).click();
-        driver.findElement(By.name("login")).click();
+        login();
         List<WebElement> countriesRows = driver.findElements(By.xpath("//td[5]/a"));
         List<String> countries = new ArrayList<>();
         for (int i = 0; i < countriesRows.size(); i++) {
@@ -59,6 +55,14 @@ public class CountriesTest {
             driver.get("http://localhost/litecart/admin/?app=countries&doc=countries");
             countriesRows = driver.findElements(By.xpath("//td[5]/a"));
         }
+    }
+
+    public void login() {
+        driver.get("http://localhost/litecart/admin/?app=countries&doc=countries");
+        driver.findElement(By.name("username")).sendKeys("admin");
+        driver.findElement(By.name("password")).sendKeys("admin");
+        driver.findElement(By.name("remember_me")).click();
+        driver.findElement(By.name("login")).click();
     }
 
     public void testStatesOrder() {

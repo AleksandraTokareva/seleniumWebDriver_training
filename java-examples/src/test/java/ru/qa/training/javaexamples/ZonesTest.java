@@ -5,15 +5,11 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 
 public class ZonesTest {
@@ -31,13 +27,11 @@ public class ZonesTest {
         login();
         List<WebElement> zones = driver.findElements(By.xpath("//td[3]/a"));
         for (int i = 0; i < zones.size(); i++) {
-            //System.out.println(zones.get(i).getText());
             zones.get(i).click();
             List<WebElement> zoneRows = driver.findElements(By.xpath("//td[3]/select"));
             List<String> zonesList = new ArrayList<>();
             for (int j = 0; j < zoneRows.size(); j++) {
                 zonesList.add(zoneRows.get(j).getText());
-               // System.out.println(zonesList.get(i));
             }
             zonesList.sort(String::compareTo);
             for (int j = 0; j < zones.size(); j++) {
@@ -48,11 +42,8 @@ public class ZonesTest {
             }
             driver.get("http://localhost/litecart/admin/?app=geo_zones&doc=geo_zones");
             zones = driver.findElements(By.xpath("//td[3]/a"));
-
-
         }
     }
-
 
     public void login() {
         driver.get("http://localhost/litecart/admin/?app=geo_zones&doc=geo_zones");
@@ -60,14 +51,12 @@ public class ZonesTest {
         driver.findElement(By.name("password")).sendKeys("admin");
         driver.findElement(By.name("remember_me")).click();
         driver.findElement(By.name("login")).click();
+    }
 
+    @After
+    public void stop() {
+        driver.quit();
+        driver = null;
     }
 }
-
-// @After
-// public void stop() {
-//driver.quit();
-// driver = null;
-// }
-//}
 

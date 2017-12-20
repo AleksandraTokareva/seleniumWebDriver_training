@@ -4,10 +4,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -19,7 +16,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 
-public class AddNewProduct {
+public class Catalog {
     private WebDriver driver;
     private WebDriverWait wait;
 
@@ -31,6 +28,12 @@ public class AddNewProduct {
             return false;
         }
     }
+        public void setDatepicker(WebDriver driver, String cssSelector, String date) {
+            new WebDriverWait(driver, 30000).until(
+                    (WebDriver d) -> d.findElement(By.cssSelector(cssSelector)).isDisplayed());
+            JavascriptExecutor.class.cast(driver).executeScript(
+                    String.format("$('%s').datepicker('setDate', '%s')", cssSelector, date));
+        }
 
     @Before
     public void start() {
@@ -74,6 +77,11 @@ public class AddNewProduct {
 
         String filePath = System.getProperty("user.dir") + "/src/test/resources/white_duck.png";
         driver.findElement(By.name("new_images[]")).sendKeys(filePath);
+       // driver.switchTo().frame(
+                driver.findElement(By.cssSelector("div#tab-general"));
+        setDatepicker(driver, "input[name='date_valid_from']", "02/20/2002");
+        //.findElement(By.name("date_valid_from")).sendKeys("20171220");
+        //driver.findElement(By.name("date_valid_to")).sendKeys("20171225");
         // driver.findElement(By.name("save")).click();
         driver.findElement(By.linkText("Information")).click();
         Select selectManufacturer = new Select(driver.findElement(By.name("manufacturer_id")));
@@ -87,26 +95,17 @@ public class AddNewProduct {
         driver.findElement(By.name("save")).click();
         driver.get("http://localhost/litecart/admin/?app=catalog&doc=catalog");
         driver.findElement(By.linkText("Rubber Ducks")).click();
-        List<WebElement> imageList = driver.findElements(By.xpath("//td[3]/a"));
-           // Assert.assertTrue(isElementPresent(By.linkText("White Duck")));
-            Assert.assertTrue(verifyProduct(imageList, "White Duck"));
+        //List<WebElement> imageList = driver.findElements(By.xpath("//td[3]/a"));
+        //for (int i = 0; i < imageList.size(); i++) {
+
+            Assert.assertTrue(isElementPresent(By.linkText("White Duck")));
 
         }
 
-
-    public Boolean verifyProduct(List<WebElement> list,String checkedText) {
-        for(int i=0;i<list.size();i++){
-            if(list.get(i).getText().equals("checkedText")){
-                return true;
-            }
-        }
-        return false;
+    @After
+    public void stop() {
+        driver.quit();
+        driver = null;
     }
 }
-// @After
-// public void stop() {
-//driver.quit();
-// driver = null;
-// }
-//}
 

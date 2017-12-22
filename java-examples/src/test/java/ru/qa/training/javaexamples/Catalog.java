@@ -28,12 +28,12 @@ public class Catalog {
             return false;
         }
     }
-        public void setDatepicker(WebDriver driver, String cssSelector, String date) {
-            new WebDriverWait(driver, 30000).until(
-                    (WebDriver d) -> d.findElement(By.cssSelector(cssSelector)).isDisplayed());
-            JavascriptExecutor.class.cast(driver).executeScript(
-                    String.format("$('%s').datepicker('setDate', '%s')", cssSelector, date));
-        }
+//        public void setDatepicker(WebDriver driver, String cssSelector, String date) {
+//            new WebDriverWait(driver, 30000).until(
+//                    (WebDriver d) -> d.findElement(By.cssSelector(cssSelector)).isDisplayed());
+//            JavascriptExecutor.class.cast(driver).executeScript(
+//                    String.format("$('%s').datepicker('setDate', '%s')", cssSelector, date));
+//        }
 
     @Before
     public void start() {
@@ -77,35 +77,35 @@ public class Catalog {
 
         String filePath = System.getProperty("user.dir") + "/src/test/resources/white_duck.png";
         driver.findElement(By.name("new_images[]")).sendKeys(filePath);
-       // driver.switchTo().frame(
-                driver.findElement(By.cssSelector("div#tab-general"));
-        setDatepicker(driver, "input[name='date_valid_from']", "02/20/2002");
+        driver.findElement(By.name("date_valid_from")).sendKeys("02/02/2017");
+      // driver.switchTo().frame(
+              //  driver.findElement(By.cssSelector("div.content")));
+//        setDatepicker(driver, "input[name='date_valid_from']", "02/02/2002");
         //.findElement(By.name("date_valid_from")).sendKeys("20171220");
         //driver.findElement(By.name("date_valid_to")).sendKeys("20171225");
         // driver.findElement(By.name("save")).click();
-        driver.findElement(By.linkText("Information")).click();
-        Select selectManufacturer = new Select(driver.findElement(By.name("manufacturer_id")));
-        selectManufacturer.selectByValue("1");
-        driver.findElement(By.name("short_description[en]")).sendKeys("White Duck Toy");
-        driver.findElement(By.cssSelector("div.trumbowyg-editor")).sendKeys("White Duck Toy");
-        //driver.findElement(By.name("save")).click();
-        driver.findElement(By.linkText("Prices")).click();
-        driver.findElement(By.name("purchase_price")).sendKeys("1");
-        driver.findElement(By.name("prices[USD]")).sendKeys("20.0000");
-        driver.findElement(By.name("save")).click();
-        driver.get("http://localhost/litecart/admin/?app=catalog&doc=catalog");
-        driver.findElement(By.linkText("Rubber Ducks")).click();
+//        driver.findElement(By.linkText("Information")).click();
+//        Select selectManufacturer = new Select(driver.findElement(By.name("manufacturer_id")));
+//        selectManufacturer.selectByValue("1");
+//        driver.findElement(By.name("short_description[en]")).sendKeys("White Duck Toy");
+//        driver.findElement(By.cssSelector("div.trumbowyg-editor")).sendKeys("White Duck Toy");
+//        //driver.findElement(By.name("save")).click();
+//        driver.findElement(By.linkText("Prices")).click();
+//        driver.findElement(By.name("purchase_price")).sendKeys("1");
+//        driver.findElement(By.name("prices[USD]")).sendKeys("20.0000");
+//        driver.findElement(By.name("save")).click();
+//        driver.get("http://localhost/litecart/admin/?app=catalog&doc=catalog");
+//        driver.findElement(By.linkText("Rubber Ducks")).click();
         //List<WebElement> imageList = driver.findElements(By.xpath("//td[3]/a"));
         //for (int i = 0; i < imageList.size(); i++) {
 
-            Assert.assertTrue(isElementPresent(By.linkText("White Duck")));
+//            Assert.assertTrue(isElementPresent(By.linkText("White Duck")));
 
         }
 
-    @After
-    public void stop() {
-        driver.quit();
-        driver = null;
+//    @After
+//    public void stop() {
+//        driver.quit();
+//        driver = null;
     }
-}
 

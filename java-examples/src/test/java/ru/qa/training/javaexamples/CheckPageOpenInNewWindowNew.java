@@ -5,7 +5,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -27,7 +26,7 @@ public class CheckPageOpenInNewWindowNew {
     }
 
     @Test
-    public void checkPageOpenInNewWindow() {
+    public void checkPageOpenInNewWindowNew() {
         driver.get("http://localhost/litecart/admin/?app=countries&doc=countries");
         driver.findElement(By.name("username")).sendKeys("admin");
         driver.findElement(By.name("password")).sendKeys("admin");
@@ -35,10 +34,7 @@ public class CheckPageOpenInNewWindowNew {
         driver.findElement(By.name("login")).click();
         driver.findElement(By.linkText("Afghanistan")).click();
         String originalWindow = driver.getWindowHandle();
-        //driver.findElement(By.cssSelector("#content > form > table:nth-child(2) > tbody > tr:nth-child(6) > td > a > i")).click();
-        //  wait.until(ExpectedConditions.numberOfWindowsToBe(2));
-        //List<WebElement> itemsLink = driver.findElements(By.xpath("//td/a"));
-        List<WebElement> itemsLink=driver.findElements(By.cssSelector("i.fa.fa-external-link"));
+        List<WebElement> itemsLink = driver.findElements(By.cssSelector("i.fa.fa-external-link"));
         for (int i = 0; i < itemsLink.size(); i++) {
             itemsLink.get(i).click();
             wait.until(ExpectedConditions.jsReturnsValue("return document.readyState=='complete'"));
@@ -48,28 +44,25 @@ public class CheckPageOpenInNewWindowNew {
             driver.switchTo().window(thereIsWindowOtherThan());
             driver.close();
             driver.switchTo().window(originalWindow);
-            //itemsLink = driver.findElements(By.xpath("//td/a"));
         }
     }
+
     public String thereIsWindowOtherThan() {
         Set<String> windows = driver.getWindowHandles();
-        for (String  s: windows) {
-            if (!s.equals(driver.getWindowHandle())) {
+        for (String window : windows) {
+            if (!window.equals(driver.getWindowHandle())) {
 
-                return s;
+                return window;
             }
         }
 
-
-        return "";
-
+        return null;
     }
 
+    @After
+    public void stop() {
+        driver.quit();
+        driver = null;
+    }
 }
-//    @After
-//    public void stop() {
-//        driver.quit();
-//        driver = null;
-//    }
-//}
 

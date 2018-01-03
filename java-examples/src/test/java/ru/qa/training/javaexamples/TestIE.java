@@ -1,27 +1,48 @@
 package ru.qa.training.javaexamples;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class OpenCorrectPageOfProduct {
+import java.util.ArrayList;
+import java.util.List;
+
+
+public class TestIE {
     private WebDriver driver1;
     private WebDriverWait wait;
+    private List<WebDriver> listDrivers;
 
     @Before
     public void start() {
-        driver1 = new ChromeDriver();
-
-        wait = new WebDriverWait(driver1, 10);
+        // System.setProperty("webdriver.gecko.driver", "C:\\geckodriver-v0.19.1-win64\\geckodriver.exe");
+        listDrivers = new ArrayList<>();
+       listDrivers.add(new FirefoxDriver());
+        //listDrivers.add(new ChromeDriver());
+        //listDrivers.add(new InternetExplorerDriver());
     }
 
-
     @Test
-    public void openCorrectPageOfProduct() {
+    public void runTests() throws InterruptedException {
+        for (int i = 0; i <listDrivers.size();i++){
+            driver1=listDrivers.get(i);
+            wait = new WebDriverWait(driver1, 10);
+            myFirstTest();
+            Thread.sleep(5000);
+            driver1.quit();
+            driver1=null;
+        }
+    }
+
+    public void myFirstTest() {
+
         driver1.get("http://localhost/litecart/en/");
         String linkOfMainPage = driver1.findElement(By.xpath("//*[@id=\"box-campaigns\"]/div/ul/li/a[1]")).getAttribute("href");
         Assert.assertEquals(linkOfMainPage,"http://localhost/litecart/en/rubber-ducks-c-1/subcategory-c-2/yellow-duck-p-1");
@@ -52,13 +73,13 @@ public class OpenCorrectPageOfProduct {
         driver1.get("http://localhost/litecart/en/");
         String priceColorOfMainPage = driver1.findElement(By.cssSelector("s.regular-price")).getCssValue("color");
         String priceLineThroughOfMainPrice = driver1.findElement(By.cssSelector("s.regular-price")).getCssValue("webkitTextDecorationsInEffect");
-        Assert.assertEquals(priceColorOfMainPage, "rgba(119, 119, 119, 1)");
+        Assert.assertEquals(priceColorOfMainPage, "rgb(119, 119, 119)");
         Assert.assertEquals(priceLineThroughOfMainPrice, "line-through");
 
         driver1.get("http://localhost/litecart/en/rubber-ducks-c-1/subcategory-c-2/yellow-duck-p-1");
         String priceColorOfImagePage = driver1.findElement(By.cssSelector("s.regular-price")).getCssValue("color");
         String priceLineThroughOfImagePrice = driver1.findElement(By.cssSelector("s.regular-price")).getCssValue("webkitTextDecorationsInEffect");
-        Assert.assertEquals(priceColorOfImagePage, "rgba(102, 102, 102, 1)");
+        Assert.assertEquals(priceColorOfImagePage, "rgb(102, 102, 102)");
         Assert.assertEquals(priceLineThroughOfImagePrice, "line-through");
 
         driver1.get("http://localhost/litecart/en/");
@@ -77,8 +98,8 @@ public class OpenCorrectPageOfProduct {
         driver1.get("http://localhost/litecart/en/");
         String sizeOfDiscountPriceMainPage = driver1.findElement(By.cssSelector("strong.campaign-price")).getCssValue("font-size");
         String sizeOfMainPriceMainPage = driver1.findElement(By.cssSelector("s.regular-price")).getCssValue("font-size");
-       // extractNumberFromSizeString(sizeOfDiscountPrice);
-       // extractNumberFromSizeString(sizeOfMainPrice);
+        // extractNumberFromSizeString(sizeOfDiscountPrice);
+        // extractNumberFromSizeString(sizeOfMainPrice);
         Assert.assertTrue(extractNumberFromSizeString(sizeOfDiscountPriceMainPage)>extractNumberFromSizeString(sizeOfMainPriceMainPage));
 
 
@@ -86,7 +107,6 @@ public class OpenCorrectPageOfProduct {
         String sizeOfDiscountPriceImagePage = driver1.findElement(By.cssSelector("strong.campaign-price")).getCssValue("font-size");
         String sizeOfMainPriceImagePage = driver1.findElement(By.cssSelector("s.regular-price")).getCssValue("font-size");
         Assert.assertTrue(extractNumberFromSizeString(sizeOfDiscountPriceImagePage)>extractNumberFromSizeString(sizeOfMainPriceImagePage));
-
 
 
 
@@ -100,13 +120,10 @@ public class OpenCorrectPageOfProduct {
         return 0.0F;
     }
 
+    @After
+    public void stop() {
+    //    driver.quit();
+        driver1 = null;
+    }
 }
 
-//        @After
-//        public void stop () {
-//            driver.quit();
-//            driver = null;
-//        }
-//
-//
-//    }

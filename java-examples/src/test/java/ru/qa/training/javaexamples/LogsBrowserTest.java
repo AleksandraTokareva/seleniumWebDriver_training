@@ -8,10 +8,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -35,10 +33,8 @@ public class LogsBrowserTest {
         driver.findElement(By.name("login")).click();
 
         List<WebElement> itemsElements = driver.findElements(By.xpath("//td[3]/a"));
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         for (int i = 1; i < itemsElements.size(); i++) {
             itemsElements.get(i).click();
-
             Assert.assertTrue(driver.manage().logs().get("browser").getAll().isEmpty());
             driver.get("http://localhost/litecart/admin/?app=catalog&doc=catalog&category_id=1");
             itemsElements = driver.findElements(By.xpath("//td[3]/a"));
